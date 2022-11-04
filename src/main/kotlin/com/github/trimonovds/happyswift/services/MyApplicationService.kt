@@ -1,6 +1,6 @@
-package org.jetbrains.plugins.template.services
+package com.github.trimonovds.happyswift.services
 
-import org.jetbrains.plugins.template.MyBundle
+import com.github.trimonovds.happyswift.MyBundle
 
 class MyApplicationService {
 
