@@ -3,7 +3,10 @@ import java.io.FileInputStream
 import java.util.*
 
 val localProps = Properties().apply {
-    load(FileInputStream(File(rootProject.rootDir, "local.properties")))
+    val file = File(rootProject.rootDir, "local.properties")
+    if (file.exists()) {
+        load(FileInputStream(file))
+    }
 }
 
 fun properties(key: String): String {
@@ -42,10 +45,7 @@ kotlin {
 intellij {
     pluginName.set(properties("pluginName"))
     plugins.set(properties("platformPlugins").split(',').map(String::trim).filter(String::isNotEmpty))
-
-    localProps.getProperty("localPath")?.let {
-        localPath.set(it)
-    }
+    localPath.set(localProps.getProperty("localPath"))
 }
 
 // Configure Gradle Changelog Plugin - read more: https://github.com/JetBrains/gradle-changelog-plugin
