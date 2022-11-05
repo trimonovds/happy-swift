@@ -45,7 +45,14 @@ kotlin {
 intellij {
     pluginName.set(properties("pluginName"))
     plugins.set(properties("platformPlugins").split(',').map(String::trim).filter(String::isNotEmpty))
-    localPath.set(localProps.getProperty("localPath"))
+
+    val localPathValue = localProps.getProperty("localPath")
+    if (localPathValue != null) {
+        localPath.set(localPathValue)
+    } else {
+        version.set(properties("platformVersion"))
+    }
+
 }
 
 // Configure Gradle Changelog Plugin - read more: https://github.com/JetBrains/gradle-changelog-plugin
