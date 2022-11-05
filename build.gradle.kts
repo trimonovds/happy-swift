@@ -1,6 +1,14 @@
 import org.jetbrains.changelog.markdownToHTML
+import java.io.FileInputStream
+import java.util.*
 
-fun properties(key: String) = project.findProperty(key).toString()
+val localProps = Properties().apply {
+    load(FileInputStream(File(rootProject.rootDir, "local.properties")))
+}
+
+fun properties(key: String): String {
+    return localProps.getProperty(key) ?: project.findProperty(key).toString()
+}
 
 plugins {
     // Java support
@@ -8,7 +16,7 @@ plugins {
     // Kotlin support
     id("org.jetbrains.kotlin.jvm") version "1.7.10"
     // Gradle IntelliJ Plugin
-    id("org.jetbrains.intellij") version "1.8.0"
+    id("org.jetbrains.intellij") version "1.9.0"
     // Gradle Changelog Plugin
     id("org.jetbrains.changelog") version "1.3.1"
     // Gradle Qodana Plugin
@@ -33,10 +41,7 @@ kotlin {
 // Configure Gradle IntelliJ Plugin - read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
     pluginName.set(properties("pluginName"))
-    version.set(properties("platformVersion"))
-    type.set(properties("platformType"))
-
-    // Plugin Dependencies. Uses `platformPlugins` property from the gradle.properties file.
+    localPath.set(properties("localPath"))
     plugins.set(properties("platformPlugins").split(',').map(String::trim).filter(String::isNotEmpty))
 }
 

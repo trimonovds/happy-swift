@@ -5,14 +5,23 @@
     <vendor>trimonovds</vendor>
 
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.appcode</depends>
+    <depends>com.intellij.swift.lang</depends>
 
+    <description>
+        <![CDATA[
+      Intention action that suggests converting a ternary operator into an 'if' block.<br>
+      Adds entry to <b>Preferences | Editor | Intentions | SDK Intentions<b>.
+    ]]>
+    </description>
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.trimonovds.happyswift.services.MyApplicationService"/>
-        <projectService serviceImplementation="com.github.trimonovds.happyswift.services.MyProjectService"/>
+        <intentionAction>
+            <className>com.github.trimonovds.happyswift.intentions.RenameSwiftTypeToUseCamelCaseIntention</className>
+            <category>SDK intentions</category>
+        </intentionAction>
+        <localInspection displayName="Replace types containing '_' with CamelCase in Swift"
+                         enabledByDefault="true"
+                         implementationClass="com.github.trimonovds.happyswift.inspections.RenameSwiftTypeToUseCamelCaseInspection">
+        </localInspection>
     </extensions>
-
-    <applicationListeners>
-        <listener class="com.github.trimonovds.happyswift.listeners.MyProjectManagerListener"
-                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
-    </applicationListeners>
 </idea-plugin>
