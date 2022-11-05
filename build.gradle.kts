@@ -7,7 +7,7 @@ val localProps = Properties().apply {
 }
 
 fun properties(key: String): String {
-    return localProps.getProperty(key) ?: project.findProperty(key).toString()
+    return project.findProperty(key).toString()
 }
 
 plugins {
@@ -41,8 +41,11 @@ kotlin {
 // Configure Gradle IntelliJ Plugin - read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
     pluginName.set(properties("pluginName"))
-    localPath.set(properties("localPath"))
     plugins.set(properties("platformPlugins").split(',').map(String::trim).filter(String::isNotEmpty))
+
+    localProps.getProperty("localPath")?.let {
+        localPath.set(it)
+    }
 }
 
 // Configure Gradle Changelog Plugin - read more: https://github.com/JetBrains/gradle-changelog-plugin
