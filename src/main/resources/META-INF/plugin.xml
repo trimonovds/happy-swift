@@ -19,8 +19,7 @@
             <className>com.github.trimonovds.happyswift.intentions.RenameSwiftTypeToUseCamelCaseIntention</className>
             <category>SDK intentions</category>
         </intentionAction>
-        <localInspection displayName="Replace types containing '_' with CamelCase in Swift"
-                         enabledByDefault="true"
+        <localInspection enabledByDefault="true"
                          implementationClass="com.github.trimonovds.happyswift.inspections.RenameSwiftTypeToUseCamelCaseInspection">
         </localInspection>
     </extensions>
